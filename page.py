@@ -1,10 +1,12 @@
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 
 class BasePage(object):
     """Base class to initialize other pages"""
 
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
 
 
@@ -30,3 +32,21 @@ class SignInPage(BasePage):
         self.username_input.send_keys(username)
         self.password_input.send_keys(password)
         self.sign_in_button.click()
+
+
+class TimesheetPage(BasePage):
+    """The weekly calendar UI showing the current week's hours"""
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.day_inputs = self.driver.find_elements(
+            By.XPATH, "//input[contains(@class,'form-control table-taskRowDay')]"
+        )
+
+    def set_hours_for_week(self, hours_in_week: dict):
+        """Sets each daily hours, Monday to Sunday, to the corresponding"""
+        assert len(hours_in_week) == 7
+
+        for input_element, daily_hours in zip(self.day_inputs, hours_in_week.values()):
+            input_element.click()
+            input_element.send_keys(daily_hours, Keys.ENTER)
