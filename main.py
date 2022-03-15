@@ -20,7 +20,7 @@ HOURS: dict[str:int] = {
 
 
 class PayHero(unittest.TestCase):
-    """A small script to automatically log PayHero hours"""
+    """A small script to automatically log PayHero hours for the current week"""
 
     def setUp(self):
         chromedriver_autoinstaller.install()
