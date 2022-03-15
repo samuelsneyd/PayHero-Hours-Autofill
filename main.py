@@ -1,41 +1,39 @@
 import time
-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+import unittest
 import chromedriver_autoinstaller
+from selenium import webdriver
+from page import SignInPage, Urls
+from decouple import config
 
+# Pulls username and password from .env
+USERNAME = config("APP_USERNAME")
+PASSWORD = config("APP_PASSWORD")
 
 # Monday -> Sunday
 HOURS = [8, 8, 8, 8, 8, 0, 0]
-USERNAME = "test"
-PASSWORD = "test"
 
 
-def main():
-    chromedriver_autoinstaller.install()
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(10)
+class PayHero(unittest.TestCase):
+    """A small script to automatically log PayHero hours"""
 
-    driver.get(Urls.login)
-    assert "PayHero" in driver.title
+    def setUp(self):
+        chromedriver_autoinstaller.install()
+        self.driver = webdriver.Chrome()
+        self.driver.implicitly_wait(10)
 
-    username_input = driver.find_element(By.ID, "username")
-    password_input = driver.find_element(By.ID, "password")
-    sign_in_button = driver.find_element(By.TAG_NAME, "button")
+    def test_log_hours(self):
+        """Logs into PayHero and logs hours"""
+        self.driver.get(Urls.login)
+        self.assertIn("PayHero", self.driver.title)
 
-    username_input.clear()
-    username_input.send_keys(USERNAME)
-    password_input.clear()
-    password_input.send_keys(PASSWORD)
-    sign_in_button.click()
+        sign_in_page = SignInPage(self.driver)
+        sign_in_page.sign_in(USERNAME, PASSWORD)
 
-    driver.close()
+        time.sleep(10)
 
-
-class Urls:
-    login = "https://login.payhero.app/"
+    def tearDown(self):
+        self.driver.quit()
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()
