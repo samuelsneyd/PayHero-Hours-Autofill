@@ -6,8 +6,8 @@ To use, create a file named `.env` in the payhero_autofiller folder.
 The file should have the following contents.
 
 ```
-PAYHERO_USERNAME=<username>
-PAYHERO_PASSWORD=<password>
+APP_USERNAME=<username>
+APP_PASSWORD=<password>
 ```
 
 Replace \<username> and \<password> with the login credentials without the <>'s and with no spaces after the =.
