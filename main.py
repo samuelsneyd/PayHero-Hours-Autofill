@@ -1,14 +1,14 @@
 import unittest
 import chromedriver_autoinstaller
-from selenium import webdriver
-from page import SignInPage, Urls, TimesheetPage
 from decouple import config
+from selenium import webdriver
+from page import SignInPage, TimesheetPage, Urls
 
 # Pulls username and password from .env
-USERNAME = config("APP_USERNAME")
-PASSWORD = config("APP_PASSWORD")
+USERNAME: str = config("APP_USERNAME")
+PASSWORD: str = config("APP_PASSWORD")
 
-HOURS = {
+HOURS: dict[str:int] = {
     "Mon": 8,
     "Tue": 8,
     "Wed": 8,
