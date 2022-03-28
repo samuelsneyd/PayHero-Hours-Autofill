@@ -25,7 +25,7 @@ class PayHero(unittest.TestCase):
     def setUp(self):
         chromedriver_autoinstaller.install()
         self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(20)
 
     def test_set_hours(self):
         """Logs into PayHero and sets the hours for the current week"""

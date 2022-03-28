@@ -47,6 +47,7 @@ class TimesheetPage(BasePage):
         """Sets each daily hours, Monday to Sunday, to the corresponding hours"""
 
         assert len(hours_in_week) == 7
+        assert len(self.daily_inputs) == 7
 
         for day_input, daily_hours in zip(self.daily_inputs, hours_in_week.values()):
             day_input.click()
